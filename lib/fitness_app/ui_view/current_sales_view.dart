@@ -3,11 +3,11 @@ import 'package:best_flutter_ui_templates/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-class MediterranesnDietView extends StatelessWidget {
+class CurrentSalesView extends StatelessWidget {
   final AnimationController? animationController;
   final Animation<double>? animation;
 
-  const MediterranesnDietView(
+  const CurrentSalesView(
       {Key? key, this.animationController, this.animation})
       : super(key: key);
 
@@ -76,7 +76,7 @@ class MediterranesnDietView extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 4, bottom: 2),
                                               child: Text(
-                                                'Eaten',
+                                                'Cash',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
@@ -125,7 +125,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 4, bottom: 3),
                                                   child: Text(
-                                                    'Kcal',
+                                                    'USD eq',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -175,7 +175,7 @@ class MediterranesnDietView extends StatelessWidget {
                                               padding: const EdgeInsets.only(
                                                   left: 4, bottom: 2),
                                               child: Text(
-                                                'Burned',
+                                                'Credit',
                                                 textAlign: TextAlign.center,
                                                 style: TextStyle(
                                                   fontFamily:
@@ -224,7 +224,7 @@ class MediterranesnDietView extends StatelessWidget {
                                                       const EdgeInsets.only(
                                                           left: 8, bottom: 3),
                                                   child: Text(
-                                                    'Kcal',
+                                                    'USD eq',
                                                     textAlign: TextAlign.center,
                                                     style: TextStyle(
                                                       fontFamily:
@@ -293,7 +293,7 @@ class MediterranesnDietView extends StatelessWidget {
                                             ),
                                           ),
                                           Text(
-                                            'Kcal left',
+                                            'USD eq left',
                                             textAlign: TextAlign.center,
                                             style: TextStyle(
                                               fontFamily:
@@ -356,7 +356,7 @@ class MediterranesnDietView extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  'Carbs',
+                                  'ZWD',
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
                                     fontFamily: FitnessAppTheme.fontName,
@@ -399,7 +399,7 @@ class MediterranesnDietView extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 6),
                                   child: Text(
-                                    '12g left',
+                                    '1200 dollars',
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                       fontFamily: FitnessAppTheme.fontName,
@@ -423,7 +423,7 @@ class MediterranesnDietView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'Protein',
+                                      'RTGS',
                                       textAlign: TextAlign.center,
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
@@ -468,7 +468,7 @@ class MediterranesnDietView extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '30g left',
+                                        '250 dollars',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -494,7 +494,7 @@ class MediterranesnDietView extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                      'Fat',
+                                      'USD',
                                       style: TextStyle(
                                         fontFamily: FitnessAppTheme.fontName,
                                         fontWeight: FontWeight.w500,
@@ -539,7 +539,7 @@ class MediterranesnDietView extends StatelessWidget {
                                     Padding(
                                       padding: const EdgeInsets.only(top: 6),
                                       child: Text(
-                                        '10g left',
+                                        '35 dollars',
                                         textAlign: TextAlign.center,
                                         style: TextStyle(
                                           fontFamily: FitnessAppTheme.fontName,
@@ -584,47 +584,47 @@ class CurvePainter extends CustomPainter {
       colorsList.addAll([Colors.white, Colors.white]);
     }
 
-    final shdowPaint = new Paint()
+    final shadowPaint = new Paint()
       ..color = Colors.black.withOpacity(0.4)
       ..strokeCap = StrokeCap.round
       ..style = PaintingStyle.stroke
       ..strokeWidth = 14;
-    final shdowPaintCenter = new Offset(size.width / 2, size.height / 2);
-    final shdowPaintRadius =
+    final shadowPaintCenter = new Offset(size.width / 2, size.height / 2);
+    final shadowPaintRadius =
         math.min(size.width / 2, size.height / 2) - (14 / 2);
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        new Rect.fromCircle(center: shadowPaintCenter, radius: shadowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
-        shdowPaint);
+        shadowPaint);
 
-    shdowPaint.color = Colors.grey.withOpacity(0.3);
-    shdowPaint.strokeWidth = 16;
+    shadowPaint.color = Colors.grey.withOpacity(0.3);
+    shadowPaint.strokeWidth = 16;
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        new Rect.fromCircle(center: shadowPaintCenter, radius: shadowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
-        shdowPaint);
+        shadowPaint);
 
-    shdowPaint.color = Colors.grey.withOpacity(0.2);
-    shdowPaint.strokeWidth = 20;
+    shadowPaint.color = Colors.grey.withOpacity(0.2);
+    shadowPaint.strokeWidth = 20;
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        new Rect.fromCircle(center: shadowPaintCenter, radius: shadowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
-        shdowPaint);
+        shadowPaint);
 
-    shdowPaint.color = Colors.grey.withOpacity(0.1);
-    shdowPaint.strokeWidth = 22;
+    shadowPaint.color = Colors.grey.withOpacity(0.1);
+    shadowPaint.strokeWidth = 22;
     canvas.drawArc(
-        new Rect.fromCircle(center: shdowPaintCenter, radius: shdowPaintRadius),
+        new Rect.fromCircle(center: shadowPaintCenter, radius: shadowPaintRadius),
         degreeToRadians(278),
         degreeToRadians(360 - (365 - angle!)),
         false,
-        shdowPaint);
+        shadowPaint);
 
     final rect = new Rect.fromLTWH(0.0, 0.0, size.width, size.width);
     final gradient = new SweepGradient(
@@ -680,7 +680,7 @@ class CurvePainter extends CustomPainter {
   }
 
   double degreeToRadians(double degree) {
-    var redian = (math.pi / 180) * degree;
-    return redian;
+    var radian = (math.pi / 180) * degree;
+    return radian;
   }
 }

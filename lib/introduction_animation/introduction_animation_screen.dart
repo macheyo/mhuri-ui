@@ -5,7 +5,10 @@ import 'package:best_flutter_ui_templates/introduction_animation/components/rela
 import 'package:best_flutter_ui_templates/introduction_animation/components/splash_view.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/top_back_skip_view.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/welcome_view.dart';
+import 'package:best_flutter_ui_templates/loginScreen.dart';
+import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroductionAnimationScreen extends StatefulWidget {
   const IntroductionAnimationScreen({Key? key}) : super(key: key);
@@ -35,6 +38,7 @@ class _IntroductionAnimationScreenState
 
   @override
   Widget build(BuildContext context) {
+    _storeOnBoardInfo();
     print(_animationController?.value);
     return Scaffold(
       backgroundColor: Color(0xffF7EBE1),
@@ -111,7 +115,13 @@ class _IntroductionAnimationScreenState
     }
   }
 
+  _storeOnBoardInfo() async{
+    int isViewed = 0;
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.setInt('onBoard', isViewed);
+  }
+
   void _signUpClick() {
-    Navigator.pop(context);
+    Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen() ));
   }
 }
