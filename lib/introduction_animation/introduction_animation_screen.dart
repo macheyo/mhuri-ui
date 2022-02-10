@@ -6,7 +6,6 @@ import 'package:best_flutter_ui_templates/introduction_animation/components/spla
 import 'package:best_flutter_ui_templates/introduction_animation/components/top_back_skip_view.dart';
 import 'package:best_flutter_ui_templates/introduction_animation/components/welcome_view.dart';
 import 'package:best_flutter_ui_templates/loginScreen.dart';
-import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

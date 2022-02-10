@@ -1,6 +1,5 @@
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:best_flutter_ui_templates/signUpScreen.dart';
 import 'package:best_flutter_ui_templates/widgets/inputTextWidget.dart';
 
@@ -32,7 +31,7 @@ class _SearchScreenState extends State<LoginScreen> {
             width: 28,
           ),
           Text(
-            'Bienvenue',
+            'Log in',
             style: TextStyle(
               fontFamily: 'Segoe UI',
               fontSize: 40,
@@ -53,7 +52,7 @@ class _SearchScreenState extends State<LoginScreen> {
             children: [
               InputTextWidget(
                   controller: _emailController,
-                  labelText: "Adresse Email",
+                  labelText: "Email Address",
                   icon: Icons.email,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress),
@@ -62,7 +61,7 @@ class _SearchScreenState extends State<LoginScreen> {
               ),
               InputTextWidget(
                   controller: _pwdController,
-                  labelText: "Mots de Passe",
+                  labelText: "Password",
                   icon: Icons.lock,
                   obscureText: true,
                   keyboardType: TextInputType.text),
@@ -75,8 +74,8 @@ class _SearchScreenState extends State<LoginScreen> {
                       child: InkWell(
                         onTap: () {},
                         child: Text(
-                          "Mots de passe oublié ?",
-                          style: TextStyle(
+                          "forgot your password?",
+                          style: TextStyle( 
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: Colors.grey[700]),
@@ -225,7 +224,7 @@ class _SearchScreenState extends State<LoginScreen> {
             pinned: _pinned,
             snap: _snap,
             floating: _floating,
-            expandedHeight: coverHeight - 25, //304,
+            expandedHeight: coverHeight - 75, //304,
             backgroundColor: Color(0xFFdccdb4),
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
@@ -280,7 +279,7 @@ class _SearchScreenState extends State<LoginScreen> {
                 child: Wrap(
               children: [
                 Text(
-                  "Vous n'avez pas un compte?  ",
+                  "New here?  ",
                   style: TextStyle(
                       color: Colors.grey[600], fontWeight: FontWeight.bold),
                 ),

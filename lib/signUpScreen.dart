@@ -1,5 +1,11 @@
+import 'dart:convert';
+import 'dart:io';
+
+import 'package:best_flutter_ui_templates/api_request/core_invoker.dart';
+import 'package:best_flutter_ui_templates/model/api_error_response.dart';
+import 'package:best_flutter_ui_templates/model/api_response.dart';
+import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:best_flutter_ui_templates/widgets/inputTextWidget.dart';
 
 import 'loginScreen.dart';
@@ -13,6 +19,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
   final TextEditingController _pass = TextEditingController();
   final TextEditingController _confirmPass = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -37,7 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             )),
         //centerTitle: true,
         leading: InkWell(
-          onTap: () => Get.to(LoginScreen()),
+          onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => LoginScreen() )),
           child: Icon(
             Icons.arrow_back,
             color: Colors.black,
@@ -77,7 +84,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 30.0,
                   ),
                   Text(
-                    'Bienvenue chez nous!!',
+                    'Enter your details',
                     style: TextStyle(
                       fontFamily: 'Segoe UI',
                       fontSize: 30,
@@ -91,15 +98,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 25.0,
                   ),
                   InputTextWidget(
-                      labelText: "Prénom",
-                      icon: Icons.person,
-                      obscureText: false,
-                      keyboardType: TextInputType.text),
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  InputTextWidget(
-                      labelText: "Nom",
+                      controller: _nameController,
+                      labelText: "Full Name",
                       icon: Icons.person,
                       obscureText: false,
                       keyboardType: TextInputType.text),
@@ -108,7 +108,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   InputTextWidget(
                       controller: _emailController,
-                      labelText: "Adresse Email",
+                      labelText: "Email Address",
                       icon: Icons.email,
                       obscureText: false,
                       keyboardType: TextInputType.emailAddress),
@@ -116,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 12.0,
                   ),
                   InputTextWidget(
-                      labelText: "Numéro Téléphone",
+                      labelText: "Mobile Number",
                       icon: Icons.phone,
                       obscureText: false,
                       keyboardType: TextInputType.number),
@@ -144,7 +144,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Colors.black,
                                   size: 32.0, /*Color(0xff224597)*/
                                 ),
-                                labelText: "Mots de Passe",
+                                labelText: "Password",
                                 labelStyle: TextStyle(
                                     color: Colors.black54, fontSize: 18.0),
                                 hintText: '',
@@ -157,9 +157,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               controller: _pass,
                               validator: (val) {
                                 if (val!.isEmpty) {
-                                  return 'tapez un mot de passe ';
+                                  return 'please enter your password here';
                                 } else if (val.length < 6) {
-                                  return 'mot de passe doit etre > 6 caractère';
+                                  return 'your password should have more than 6 characters';
                                 }
 
                                 return null;
@@ -192,7 +192,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   color: Colors.black,
                                   size: 32.0, /*Color(0xff224597)*/
                                 ),
-                                labelText: "Confirmer Mots de Passe",
+                                labelText: "Repeat Password",
                                 labelStyle: TextStyle(
                                     color: Colors.black54, fontSize: 18.0),
                                 hintText: '',
@@ -205,9 +205,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               controller: _confirmPass,
                               validator: (val) {
                                 if (val!.isEmpty)
-                                  return 'confirmer Mot de passe!!';
+                                  return 'repeat your password for confirmation here';
                                 if (val != _pass.text)
-                                  return 'Mot de passe incorrect';
+                                  return 'passwords do not match';
                                 return null;
                               }),
                         ),
@@ -221,7 +221,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 55.0,
                     child: ElevatedButton(
                       onPressed: () async {
-                        if (_formKey.currentState!.validate()) {}
+                        if (_formKey.currentState!.validate()) {
+                          Map data = {
+                            'name': _nameController.text,
+                            'email': _emailController.text,
+                            'password':_confirmPass.text
+                          };
+                          HttpClientResponse response = await CoreInvoker().invoke("https://mhuri-core.herokuapp.com/mhuri/auth/signup", data);
+                          String reply = await response.transform(utf8.decoder).join();
+                          Map<String, dynamic> decodedResponse = jsonDecode(reply);
+                          if(response.statusCode==HttpStatus.created) {
+                            final snackBar = SnackBar(
+                              content: Text(ApiResponse.fromJson(decodedResponse).message),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => NavigationHomeScreen()));
+                          }
+                          else{
+                            final snackBar = SnackBar(
+                              content: Text(ApiErrorResponse.fromJson(decodedResponse).detail),
+                              action: SnackBarAction(
+                                label: 'RETRY',
+                                onPressed: () {
+                                  // Some code to undo the change.
+                                },
+                              ),
+                            );
+                            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                          }
+                        }
                       },
                       style: ElevatedButton.styleFrom(
                         primary: Colors.white,
@@ -245,7 +274,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         child: Container(
                           alignment: Alignment.center,
                           child: Text(
-                            "Continuer",
+                            "Proceed",
                             textAlign: TextAlign.center,
                             style: TextStyle(color: Colors.white, fontSize: 25),
                           ),
