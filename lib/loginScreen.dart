@@ -215,6 +215,7 @@ class _SearchScreenState extends State<LoginScreen> {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         // leading: Icon(Icons.arrow_back),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent,
         elevation: 0.0,
       ),

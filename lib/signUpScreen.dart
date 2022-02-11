@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:best_flutter_ui_templates/api_request/core_invoker.dart';
+import 'package:best_flutter_ui_templates/api_request/loading_alert_dialog.dart';
 import 'package:best_flutter_ui_templates/model/api_error_response.dart';
 import 'package:best_flutter_ui_templates/model/api_response.dart';
 import 'package:best_flutter_ui_templates/navigation_home_screen.dart';
@@ -18,6 +19,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<State> _keyLoader = new GlobalKey<State>();
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _pass = TextEditingController();
@@ -227,6 +229,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             'email': _emailController.text,
                             'password':_confirmPass.text
                           };
+                          LoadingAlertDialog.showLoadingDialog(context, _keyLoader);
                           HttpClientResponse response = await CoreInvoker().invoke("https://mhuri-core.herokuapp.com/mhuri/auth/signup", data);
                           String reply = await response.transform(utf8.decoder).join();
                           Map<String, dynamic> decodedResponse = jsonDecode(reply);
@@ -235,14 +238,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               content: Text(ApiResponse.fromJson(decodedResponse).message),
                             );
                             ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.pushReplacement(context, MaterialPageRoute(
                                 builder: (context) => NavigationHomeScreen()));
                           }
                           else{
+                            Navigator.of(context,rootNavigator: true).pop();
                             final snackBar = SnackBar(
                               content: Text(ApiErrorResponse.fromJson(decodedResponse).detail),
                               action: SnackBarAction(
-                                label: 'RETRY',
+                                label: 'TRY AGAIN',
                                 onPressed: () {
                                   // Some code to undo the change.
                                 },
